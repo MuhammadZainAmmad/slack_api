@@ -1,7 +1,8 @@
 from slack_sdk import WebClient
 from htmlslacker import HTMLSlacker
+import html2text
 
-slack_token = "xoxb-5472584772914-5472503405811-TyETVNdKI0LyOb4W3rL9vj5h"
+slack_token = "xoxb-5472584772914-5472503405811-CSISwtO56KfOYJOgHlWe9Yw0"
 channel_id = "C05E96Q6PFB"
 
 # Slack API client initialization
@@ -13,9 +14,13 @@ def send_message_to_channel(filePath):
     with open (filePath, 'r') as file:
         content = file.read()
     try:
-        # response = client.files_upload_v2(channels=channel_id, file=filePath) # Sending the file as it is
-        # response = client.chat_postMessage(channel=channel_id, text=content) # Sending the content of the file as message
+        # 1) Sending the file as it is
+        # response = client.files_upload_v2(channels=channel_id, file=filePath) 
         
+        # 2.1) Sending the content of the file as message
+        # response = client.chat_postMessage(channel=channel_id, text=content) 
+        
+        # 2.2) Same, sending the content of the file as message
         # message = {
         #             'blocks': [
         #                 {
@@ -27,9 +32,14 @@ def send_message_to_channel(filePath):
         #                 }
         #             ]
         #         }
-        # response = client.chat_postMessage(channel=channel_id, text= 'html page', blocks=message['blocks']) # Same, sending the content of the file as message
+        # response = client.chat_postMessage(channel=channel_id, text= 'html page', blocks=message['blocks'])
         
-        message = HTMLSlacker(content).get_output()
+        # 3) Sending content with parsing 
+        # message = HTMLSlacker(content).get_output()
+        # response = client.chat_postMessage(channel=channel_id, text=message) 
+        
+        # 4) Sending the table content with a table like format 
+        message = html2text.html2text(content)
         response = client.chat_postMessage(channel=channel_id, text=message)
         
         if response["ok"]:
