@@ -6,7 +6,6 @@ import html2text
 slack_token = os.environ.get('slackAPIToken_task1')
 channel_id = "C05E96Q6PFB"
 
-# Slack API client initialization
 client = WebClient(token=slack_token)
 
 
@@ -41,8 +40,19 @@ def send_message_to_channel(filePath):
         # response = client.chat_postMessage(channel=channel_id, text=message) 
         
         # 4) Sending the table content with a table like format 
-        message = html2text.html2text(content)
-        response = client.chat_postMessage(channel=channel_id, text=message)
+        slackTable = html2text.html2text(content) # parse the html table 
+        message = {
+                "blocks": [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": f"```{slackTable}```"
+                        }
+                    }
+                ]
+            } # for sending mesage in code block
+        response = client.chat_postMessage(channel=channel_id, text= 'html page', blocks=message['blocks'])
         
         if response["ok"]:
             print("Message sent successfully!")
