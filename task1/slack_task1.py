@@ -1,8 +1,9 @@
+import os
 from slack_sdk import WebClient
 from htmlslacker import HTMLSlacker
 import html2text
 
-slack_token = "xoxb-5472584772914-5472503405811-CSISwtO56KfOYJOgHlWe9Yw0"
+slack_token = os.environ.get('slackAPIToken_task1')
 channel_id = "C05E96Q6PFB"
 
 # Slack API client initialization
@@ -13,6 +14,7 @@ client = WebClient(token=slack_token)
 def send_message_to_channel(filePath):
     with open (filePath, 'r') as file:
         content = file.read()
+        
     try:
         # 1) Sending the file as it is
         # response = client.files_upload_v2(channels=channel_id, file=filePath) 
