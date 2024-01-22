@@ -1,0 +1,2 @@
+- Description:
+    - testing code for integrating slack api (for a client project): sending an html table as a slack message (well formatted)
