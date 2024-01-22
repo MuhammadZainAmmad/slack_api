@@ -11,7 +11,7 @@ client = WebClient(token=slack_token)
 
 # Function to send a message to a channel
 def send_message_to_channel(filePath):
-    with open (filePath, 'r') as file:
+    with open(filePath, 'r') as file:
         content = file.read()
         
     try:
@@ -62,16 +62,3 @@ def send_message_to_channel(filePath):
         print(f"Error: {str(e)}")
         
 send_message_to_channel("./test.html")
-
-# Program that causes a divide by zero error
-# def testingFunc():
-#     try:
-#         numerator = 10
-#         denominator = 0
-#         result = numerator / denominator
-#         print(f"The result is: {result}")
-#     except Exception as e:
-#         error_message = f"An error occurred: {str(e)}"
-#         send_message_to_channel(error_message)
-
-# testingFunc()
